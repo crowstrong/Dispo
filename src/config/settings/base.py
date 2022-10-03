@@ -28,9 +28,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "django_countries",
     "carrier",
-    "freight_forwarder",
-    "dispo_admin",
+    "shipper",
+    "dispo",
     "accounts",
     "core",
 ]
