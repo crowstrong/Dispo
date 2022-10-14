@@ -1,5 +1,7 @@
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework import routers, permissions
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
 from api.views import (CustomerViewSet, ProfileViewSet, OrderViewSet, VehicleViewSet, CargoViewSet, CustomerDetailsView,
                        CustomerDeleteView, CustomerCreateView, CustomerUpdateView, ProfileDetailsView,
@@ -15,9 +17,26 @@ routers.register("orders", OrderViewSet)
 routers.register("vehicles", VehicleViewSet)
 routers.register("cargo", CargoViewSet)
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Quizez API",
+        default_version="v1",
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[
+        permissions.AllowAny,
+    ],
+)
+
 urlpatterns = [
     path("", include(routers.urls)),
     path("auth/", include("rest_framework.urls")),
+    path("auth/", include("djoser.urls.jwt")),
+    path("docs/", schema_view.with_ui("swagger", cache_timeout=0), name="swagger_docs"),
     path("customer/<int:pk>/", CustomerDetailsView.as_view(), name="api_customer_details"),
     path("customer/create/", CustomerCreateView.as_view(), name="api_customer_create"),
     path("customer/update/<int:pk>/", CustomerUpdateView.as_view(), name="api_customer_update"),
