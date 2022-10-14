@@ -18,23 +18,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-c@16b*5v@c182a-vge^+3*h!-c3=$^6b-rw+@d%+2dnaj-ffia"
 
+
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.contenttypes",
     "django.contrib.admin",
     "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "phonenumber_field",
     "django_countries",
+    "rest_framework",
     "carrier",
     "shipper",
-    "dispo",
     "accounts",
     "core",
 ]
+
+AUTH_USER_MODEL = "accounts.Customer"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
