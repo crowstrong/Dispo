@@ -1,19 +1,24 @@
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     RetrieveAPIView, UpdateAPIView)
+from rest_framework.permissions import (IsAdminUser, IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
-from api.serializers import CustomerSerializer, OrderSerializer, VehicleSerializer, ProfileSerializer, CargoSerializer
-from shipper.models import Order, Cargo
+
 from accounts.models import Customer, Profile
+from api.serializers import (CargoSerializer, CustomerSerializer,
+                             OrderSerializer, ProfileSerializer,
+                             VehicleSerializer)
 from carrier.models import Vehicle
+from shipper.models import Cargo, Order
 
 
 # Customer Views
 
+
 class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [IsAdminUser | IsAuthenticatedOrReadOnly]
-
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class CustomerCreateView(CreateAPIView):
@@ -24,17 +29,16 @@ class CustomerCreateView(CreateAPIView):
 class CustomerDetailsView(RetrieveAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
-
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        return Customer.objects.get(pk=self.kwargs.get('pk'))
+        return Customer.objects.get(pk=self.kwargs.get("pk"))
 
 
 class CustomerUpdateView(UpdateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class CustomerDeleteView(DestroyAPIView):
@@ -45,10 +49,11 @@ class CustomerDeleteView(DestroyAPIView):
 
 # Profile Views
 
+
 class ProfileViewSet(ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAdminUser | IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class ProfileCreateView(CreateAPIView):
@@ -59,7 +64,7 @@ class ProfileCreateView(CreateAPIView):
 class ProfileDetailsView(RetrieveAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return Profile.objects.get(pk=self.kwargs.get("pk"))
@@ -68,7 +73,7 @@ class ProfileDetailsView(RetrieveAPIView):
 class ProfileUpdateView(UpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class ProfileDeleteView(DestroyAPIView):
@@ -79,21 +84,22 @@ class ProfileDeleteView(DestroyAPIView):
 
 # Order Views
 
+
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class OrderCreateView(CreateAPIView):
     queryset = Order
-    permission_classes = [IsAdminUser | IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class OrderDetailsView(RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return Order.objects.get(pk=self.kwargs.get("pk"))
@@ -102,16 +108,17 @@ class OrderDetailsView(RetrieveAPIView):
 class OrderUpdateView(UpdateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class OrderDeleteView(DestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_classes = [IsAdminUser | IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 # Vehicle Views
+
 
 class VehicleViewSet(ModelViewSet):
     queryset = Vehicle.objects.all()
@@ -146,6 +153,7 @@ class VehicleDeleteView(DestroyAPIView):
 
 
 # Cargo Views
+
 
 class CargoViewSet(ModelViewSet):
     queryset = Cargo.objects.all()

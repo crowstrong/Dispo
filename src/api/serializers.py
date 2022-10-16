@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 
 from accounts.models import Customer, Profile
 from carrier.models import Vehicle
-from shipper.models import Order, Cargo
+from shipper.models import Cargo, Order
 
 
 class CustomerSerializer(ModelSerializer):
