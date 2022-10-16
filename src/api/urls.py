@@ -1,13 +1,17 @@
-from django.urls import path, include
-from rest_framework import routers, permissions
+from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from rest_framework import permissions, routers
 
-from api.views import (CustomerViewSet, ProfileViewSet, OrderViewSet, VehicleViewSet, CargoViewSet, CustomerDetailsView,
-                       CustomerDeleteView, CustomerCreateView, CustomerUpdateView, ProfileDetailsView,
-                       ProfileCreateView, ProfileUpdateView, ProfileDeleteView, OrderDetailsView, OrderCreateView,
-                       OrderUpdateView, OrderDeleteView, VehicleDetailsView, VehicleCreateView, VehicleUpdateView,
-                       VehicleDeleteView, CargoDetailsView, CargoCreateView, CargoUpdateView, CargoDeleteView)
+from api.views import (CargoCreateView, CargoDeleteView, CargoDetailsView,
+                       CargoUpdateView, CargoViewSet, CustomerCreateView,
+                       CustomerDeleteView, CustomerDetailsView,
+                       CustomerUpdateView, CustomerViewSet, OrderCreateView,
+                       OrderDeleteView, OrderDetailsView, OrderUpdateView,
+                       OrderViewSet, ProfileCreateView, ProfileDeleteView,
+                       ProfileDetailsView, ProfileUpdateView, ProfileViewSet,
+                       VehicleCreateView, VehicleDeleteView,
+                       VehicleDetailsView, VehicleUpdateView, VehicleViewSet)
 
 app_name = "api"
 routers = routers.DefaultRouter()
