@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+
 from carrier.models import Vehicle
 from shipper.models import Cargo, Order
 
@@ -12,7 +13,7 @@ class OrderTestCase(TestCase):
         self.order = Order.objects.create(
             user=self.user,
             order_id="f50ec0b7-f960-400d-91f0-c42a6d44e3d0",
-            loading_place='Paris',
+            loading_place="Paris",
             loading_date="2022-07-07 00:00:00",
             delivery_place="Berlin",
             delivery_date="2022-07-10 00:00:00",
@@ -26,7 +27,7 @@ class OrderTestCase(TestCase):
             currency="EUR",
             proposed_price=2400.00,
             status="Actual",
-            remarks="Let's do it!!!"
+            remarks="Let's do it!!!",
         )
         self.order.save()
 
@@ -63,5 +64,3 @@ class OrderTestCase(TestCase):
         for cargo_type in cargo_types:
             obj = Cargo.objects.create(cargo_type=cargo_type)
             self.assertEquals(cargo_type, obj.cargo_type)
-
-

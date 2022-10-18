@@ -7,10 +7,14 @@ RUN mkdir /Dispo
 
 WORKDIR /Dispo
 
-COPY ./src ./
+RUN mkdir /commands
+
+COPY ./src ./src
+COPY ./commands ./commands
+
 COPY requirements.txt ./requirements.txt
 
 RUN python -m pip install --upgrade pip
 RUN pip install -r ./requirements.txt
 
-CMD ["python", "manage.py", "runserver", "0:8008"]
+CMD ["bash"]
