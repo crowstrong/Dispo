@@ -6,7 +6,7 @@ on:
   - pull_request
 
 env:
-  DJANGO_SETTINGS_MODULE: config.settings.dev
+  DJANGO_SETTINGS_MODULE: config.settings.github
 
 jobs:
   test:
