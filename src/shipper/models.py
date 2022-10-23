@@ -20,15 +20,17 @@ class Order(models.Model):
 
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
-    loading_place = CountryField(blank_label='(select country)', blank=False)
+    loading_place = CountryField(blank_label="(select country)", blank=False)
     loading_date = models.DateTimeField(blank=False, null=True)
-    delivery_place = CountryField(blank_label='(select country)', blank=False)
+    delivery_place = CountryField(blank_label="(select country)", blank=False)
     delivery_date = models.DateTimeField(blank=False, null=True)
     distance = models.FloatField(blank=True, null=True)
-    vehicle_type = models.ForeignKey(to="carrier.Vehicle", related_name="vehicle_type", on_delete=models.CASCADE,
-                                     blank=False)
-    cargo_details = models.ForeignKey(to="shipper.Cargo", related_name="cargo_details", on_delete=models.CASCADE,
-                                      blank=False)
+    vehicle_type = models.ForeignKey(
+        to="carrier.Vehicle", related_name="vehicle_type", on_delete=models.CASCADE, blank=False
+    )
+    cargo_details = models.ForeignKey(
+        to="shipper.Cargo", related_name="cargo_details", on_delete=models.CASCADE, blank=False
+    )
     length = models.FloatField(blank=False, null=True, validators=[MaxValueValidator(13.6)])
     weight = models.FloatField(blank=False, null=True, validators=[MaxValueValidator(24.0)])
     adr = models.BooleanField(default=False, null=True)
