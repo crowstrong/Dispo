@@ -14,4 +14,4 @@ def create_in_mongo(request):
 
 def all_entries(request):
     orders_timestamps = list(Entry.objects.all().values_list("timestamp"))
-    return HttpResponse(f"| ".join([timestamp.strftime("%m-%d-%Y %H:%H:%S") for timestamp in orders_timestamps]))
+    return HttpResponse("| ".join([timestamp.strftime("%m-%d-%Y %H:%H:%S") for timestamp in orders_timestamps]))
