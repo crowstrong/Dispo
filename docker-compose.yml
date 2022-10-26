@@ -6,10 +6,12 @@ services:
     container_name: dispo_container
     working_dir: /Dispo
     command:
-      - ./commands/start_server.sh
+      - ./commands/start_server_${MODE}.sh
     ports:
-      - 8010:8008
+      - ${LOCAL_PORT}:${WSGI_PORT}
     volumes:
+      - static_content:/Dispo/src/static
+      - media_content:/Dispo/src/media
       - ./src:/Dispo/src
     env_file:
       - .env
@@ -17,9 +19,9 @@ services:
       - postgres
 
   postgres:
-    image: postgres:15
+    image: postgres:12
     ports:
-      - 5433:5432
+      - ${POSTGRES_PORT}:5432
     volumes:
       - pg_data:/var/lib/postgresql/data
     env_file:
@@ -38,7 +40,49 @@ services:
     depends_on:
       - postgres
 
+  mongodb:
+    image: mongo:3-stretch
+    container_name: ${ME_CONFIG_MONGODB_SERVER}
+    ports:
+      - ${ME_CONFIG_MONGODB_PORT}:27017
+    command: [ "--bind_ip_all", "--smallfiles" ]
+    volumes:
+      - mongo_data:/data/db
+    env_file:
+      - .env
+    restart: always
+
+  mongoadmin:
+    image: mongo-express
+    restart: always
+    container_name: mongo_admin_container
+    ports:
+      - 8091:8081
+    env_file:
+      - .env
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  nginx:
+    image: nginx:1.19
+    volumes:
+      - static_content:/Dispo/src/static
+      - media_content:/Dispo/src/media
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
 
 volumes:
+  mongo_data: { }
   pg_data: { }
   pgadmin_data: { }
+  static_content: { }
+  media_content: { }

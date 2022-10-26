@@ -9,6 +9,12 @@ print(CURRENT_ENV)
 # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_URL = "/static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
 # INSTALLED_APPS += ""
 if os.environ.get("GITHUB_WORKFLOW"):
     DATABASES = {
@@ -18,7 +24,7 @@ if os.environ.get("GITHUB_WORKFLOW"):
             "USER": "postgres",
             "PASSWORD": "postgres",
             "HOST": "127.0.0.1",
-            "PORT": "5433",
+            "PORT": "5432",
         },
     }
 else:
@@ -34,5 +40,7 @@ else:
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
             "HOST": os.environ.get("POSTGRES_HOST"),
             "PORT": os.environ.get("POSTGRES_PORT"),
+            "TEST": {"NAME": "test"},
         },
     }
+

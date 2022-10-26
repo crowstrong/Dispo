@@ -1,3 +1,5 @@
+import decimal
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
@@ -13,10 +15,10 @@ class OrderTestCase(TestCase):
         self.order = Order.objects.create(
             user=self.user,
             order_id="f50ec0b7-f960-400d-91f0-c42a6d44e3d0",
-            loading_place="Paris",
-            loading_date="2022-07-07 00:00:00",
-            delivery_place="Berlin",
-            delivery_date="2022-07-10 00:00:00",
+            loading_place="FR",
+            loading_date="2006-10-25T14:30+02:00",
+            delivery_place="DE",
+            delivery_date="2006-10-25T14:30+02:00",
             distance=1211.5,
             vehicle_type=self.vehicle,
             cargo_details=self.cargo,
@@ -25,7 +27,7 @@ class OrderTestCase(TestCase):
             adr=False,
             waste=False,
             currency="EUR",
-            proposed_price=2400.00,
+            proposed_price=decimal.Decimal(2400),
             status="Actual",
             remarks="Let's do it!!!",
         )
@@ -34,10 +36,10 @@ class OrderTestCase(TestCase):
     def test_order_model(self):
         self.assertEqual(self.order.user, self.user)
         self.assertEqual(self.order.order_id, "f50ec0b7-f960-400d-91f0-c42a6d44e3d0")
-        self.assertEqual(self.order.loading_place, "Paris")
-        self.assertEqual(self.order.loading_date, "2022-07-07 00:00:00")
-        self.assertEqual(self.order.delivery_place, "Berlin")
-        self.assertEqual(self.order.delivery_date, "2022-07-10 00:00:00")
+        self.assertEqual(self.order.loading_place, "FR")
+        self.assertEqual(self.order.loading_date, "2006-10-25T14:30+02:00")
+        self.assertEqual(self.order.delivery_place, "DE")
+        self.assertEqual(self.order.delivery_date, "2006-10-25T14:30+02:00")
         self.assertEqual(self.order.distance, 1211.5)
         self.assertEqual(self.order.vehicle_type, self.vehicle)
         self.assertEqual(self.order.cargo_details, self.cargo)
@@ -46,7 +48,7 @@ class OrderTestCase(TestCase):
         self.assertEqual(self.order.adr, False)
         self.assertEqual(self.order.waste, False)
         self.assertEqual(self.order.currency, "EUR")
-        self.assertEqual(self.order.proposed_price, 2400.00)
+        self.assertEqual(self.order.proposed_price, decimal.Decimal(2400))
         self.assertEqual(self.order.status, "Actual")
         self.assertEqual(self.order.remarks, "Let's do it!!!")
 
