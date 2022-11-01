@@ -92,39 +92,39 @@ class Order(models.Model):
                f"{self.loading_city} {self.delivery_date} {self.delivery_country} {self.delivery_postcode} " \
                f"{self.delivery_city} "
 
-    @classmethod
-    def generate_instances(cls, count: int) -> None:
-        fake = Faker()
-        for _ in range(count):
-            cls.objects.create(
-                order_id=fake.uuid4(),
-                company_name=fake.company(),
-                contact_person=fake.name(),
-                contact_email=fake.company_email(),
-                loading_country=fake.country(),
-                loading_postcode=fake.postcode(),
-                loading_city=fake.city(),
-                loading_address=fake.street_address(),
-                loading_coordinates=fake.latlng(),
-                loading_date=fake.iso8601(),
-                delivery_country=fake.country(),
-                delivery_postcode=fake.postcode(),
-                delivery_city=fake.city(),
-                delivery_address=fake.street_address(),
-                delivery_coordinates=fake.latlng(),
-                delivery_date=fake.iso8601(),
-                distance=round(random.uniform(500.0, 1500.0), 1),
-                trailer_details=random.choice(Trailer.trailer),
-                cargo_details=random.choice(Cargo.cargo_type),
-                length=random.uniform(8.0, 13.6),
-                weight=random.uniform(10.0, 24.0),
-                adr=fake.pybool(),
-                waste=fake.pybool(),
-                currency=random.choice(Order.currency),
-                proposed_price=round(random.uniform(500.00, 5000.00), 2),
-                status=random.choice(Order.status),
-                remarks=fake.word(),
-            )
+    # @classmethod
+    # def generate_instances(cls, count: int) -> None:
+    #     fake = Faker()
+    #     for _ in range(count):
+    #         cls.objects.create(
+    #             order_id=fake.uuid4(),
+    #             company_name=fake.company(),
+    #             contact_person=fake.name(),
+    #             contact_email=fake.company_email(),
+    #             loading_country=fake.country(),
+    #             loading_postcode=fake.postcode(),
+    #             loading_city=fake.city(),
+    #             loading_address=fake.street_address(),
+    #             loading_coordinates=fake.latlng(),
+    #             loading_date=fake.iso8601(),
+    #             delivery_country=fake.country(),
+    #             delivery_postcode=fake.postcode(),
+    #             delivery_city=fake.city(),
+    #             delivery_address=fake.street_address(),
+    #             delivery_coordinates=fake.latlng(),
+    #             delivery_date=fake.iso8601(),
+    #             distance=round(random.uniform(500.0, 1500.0), 1),
+    #             trailer_details=random.choice(Trailer.trailer),
+    #             cargo_details=random.choice(Cargo.cargo_type),
+    #             length=random.uniform(8.0, 13.6),
+    #             weight=random.uniform(10.0, 24.0),
+    #             adr=fake.pybool(),
+    #             waste=fake.pybool(),
+    #             currency=random.choice(Order.currency),
+    #             proposed_price=round(random.uniform(500.00, 5000.00), 2),
+    #             status=random.choice(Order.status),
+    #             remarks=fake.word(),
+    #         )
 
     class Meta:
         verbose_name = _("Order")

@@ -44,20 +44,20 @@ class Truck(models.Model):
     def __str__(self):
         return f"{self.vehicle_name} {self.truck_plates} {self.trailer_plates}"
 
-    @classmethod
-    def generate_instances(cls, count: int) -> None:
-        fake = Faker()
-        for _ in range(count):
-            cls.objects.create(
-                carrier_name=fake.company(),
-                vehicle_name=fake.bothify(text='??-####', letters='ABCDE'),
-                truck_registration=fake.country(),
-                truck_plates=fake.license_plate(),
-                trailer_registration=fake.country(),
-                trailer_plates=fake.license_plate(),
-                trailer_type=Trailer.TRAILER_TYPES.CURTAIN,
-                truck_status=Truck.TRUCK_STATUS.ACTUAL,
-            )
+    # @classmethod
+    # def generate_instances(cls, count: int) -> None:
+    #     fake = Faker()
+    #     for _ in range(count):
+    #         cls.objects.create(
+    #             carrier_name=fake.company(),
+    #             vehicle_name=fake.bothify(text='??-####', letters='ABCDE'),
+    #             truck_registration=fake.country(),
+    #             truck_plates=fake.license_plate(),
+    #             trailer_registration=fake.country(),
+    #             trailer_plates=fake.license_plate(),
+    #             trailer_type=Trailer.TRAILER_TYPES.CURTAIN,
+    #             truck_status=Truck.TRUCK_STATUS.ACTUAL,
+    #         )
 
     class Meta:
         verbose_name = _("Trucks")
