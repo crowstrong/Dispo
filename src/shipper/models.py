@@ -1,11 +1,13 @@
 import random
 import uuid
-from faker import Faker
+
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
+from faker import Faker
+
 from carrier.models import Trailer
 
 
@@ -61,16 +63,16 @@ class Order(models.Model):
     loading_country = CountryField(blank_label="(select country)", blank=False)
     loading_postcode = models.CharField(validators=[MinValueValidator(5)], max_length=25, blank=False, null=True)
     loading_city = models.CharField(max_length=100, blank=False, null=True)
-    loading_address = models.CharField(max_length=255, blank=False, null=True)
-    loading_coordinates = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=False)
+    loading_address = models.CharField(max_length=255, blank=True, null=True)
+    loading_coordinates = models.CharField(max_length=255, blank=True, null=True)
     loading_date = models.DateTimeField(blank=False, null=True)
     delivery_country = CountryField(blank_label="(select country)", blank=False)
     delivery_postcode = models.CharField(validators=[MinValueValidator(5)], max_length=25, blank=False, null=True)
     delivery_city = models.CharField(max_length=100, blank=False, null=True)
-    delivery_address = models.CharField(max_length=255, blank=False, null=True)
-    delivery_coordinates = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=False)
+    delivery_address = models.CharField(max_length=255, blank=True, null=True)
+    delivery_coordinates = models.CharField(max_length=255, blank=True, null=True)
     delivery_date = models.DateTimeField(blank=False, null=True)
-    distance = models.DecimalField(max_digits=20, decimal_places=1, blank=True, null=True)
+    distance = models.CharField(max_length=255, blank=True, null=True)
     trailer_details = models.ForeignKey(
         to="carrier.Trailer", related_name="trailer_type", on_delete=models.CASCADE, blank=False, null=True)
     cargo_details = models.ForeignKey(

@@ -1,7 +1,8 @@
-from django.views.generic import CreateView, ListView
-from shipper.models import Order
-from shipper.forms import OrderForm
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView
+
+from shipper.forms import OrderForm
+from shipper.models import Order
 
 
 class MyOrdersView(ListView):

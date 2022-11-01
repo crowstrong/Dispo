@@ -1,5 +1,7 @@
 from django.urls import path
+
 from shipper.views import CreateOrderView, MyOrdersView
+
 app_name = "shipper"
 
 urlpatterns = [

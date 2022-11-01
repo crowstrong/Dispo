@@ -4,7 +4,6 @@ from django_countries.fields import CountryField
 from faker import Faker
 
 
-
 class Trailer(models.Model):
     class TRAILER_TYPES(models.TextChoices):
         REFRIGERATOR = "Refrigerator", "Refrigerator"

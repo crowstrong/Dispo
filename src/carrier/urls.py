@@ -1,5 +1,6 @@
 from django.urls import path
-from carrier.views import MyVehiclesView, CreateVehicleView
+
+from carrier.views import CreateVehicleView, MyVehiclesView
 
 app_name = "carrier"
 

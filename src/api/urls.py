@@ -11,8 +11,9 @@ from api.views import (CargoCreateView, CargoDeleteView, CargoDetailsView,
                        OrderViewSet, ProfileCreateView, ProfileDeleteView,
                        ProfileDetailsView, ProfileUpdateView, ProfileViewSet,
                        TrailerCreateView, TrailerDeleteView,
-                       TrailerDetailsView, TrailerUpdateView, TrailerViewSet, TruckViewSet, TruckCreateView,
-                       TruckDetailsView, TruckUpdateView, TruckDeleteView)
+                       TrailerDetailsView, TrailerUpdateView, TrailerViewSet,
+                       TruckCreateView, TruckDeleteView, TruckDetailsView,
+                       TruckUpdateView, TruckViewSet)
 
 app_name = "api"
 routers = routers.DefaultRouter()

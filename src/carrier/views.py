@@ -1,7 +1,8 @@
-from carrier.models import Truck
-from django.views.generic import CreateView, ListView
-from carrier.forms import TruckForm
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView
+
+from carrier.forms import TruckForm
+from carrier.models import Truck
 
 
 class MyVehiclesView(ListView):

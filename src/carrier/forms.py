@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+
 from carrier.models import Truck
 
 
