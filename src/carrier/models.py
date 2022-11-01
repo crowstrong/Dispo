@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from faker import Faker
-import random
+
 
 
 class Trailer(models.Model):

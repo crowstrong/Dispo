@@ -23,8 +23,8 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3"
                href="{% url 'shipper:my_orders' %}">My Orders</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'shipper:add_order' %}">Add Order</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Vehicles</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url "carrier:my_vehicles" %}">Vehicles</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url "carrier:add_vehicle" %}">Add Vehicle</a>
         </div>
     </div>
     <!-- Page content wrapper-->

@@ -8,12 +8,6 @@ class MyOrdersView(ListView):
     model = Order
     template_name = "shipper/my_orders.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        my_orders = Order.objects.all()
-        context["my_orders"] = my_orders
-        return context
-
 
 class CreateOrderView(CreateView):
     model = Order
