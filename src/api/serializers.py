@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 
 from accounts.models import Customer, Profile
-from carrier.models import Vehicle
+from carrier.models import Trailer, Truck
 from shipper.models import Cargo, Order
 
 
@@ -23,9 +23,15 @@ class ProfileSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class VehicleSerializer(ModelSerializer):
+class TruckSerializer(ModelSerializer):
     class Meta:
-        model = Vehicle
+        model = Truck
+        fields = "__all__"
+
+
+class TrailerSerializer(ModelSerializer):
+    class Meta:
+        model = Trailer
         fields = "__all__"
 
 

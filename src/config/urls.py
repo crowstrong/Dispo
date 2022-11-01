@@ -6,6 +6,7 @@ from core.views import DispoHomePage, Error404
 urlpatterns = [
     path("", DispoHomePage.as_view(), name='index'),
     path("admin/", admin.site.urls),
+    path("shipper/", include("shipper.urls")),
     path("api/", include("api.urls")),
     path("mongo/", include("mongo_dispo.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
