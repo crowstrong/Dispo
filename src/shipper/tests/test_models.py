@@ -74,10 +74,10 @@ class OrderTestCase(TestCase):
         self.assertEqual(str(self.user), "FreightForwarder")
 
     def test_vehicle_type(self):
-        vehicle_types = ["Refrigerator", "Curtain Trailer"]
-        for vehicle_type in vehicle_types:
-            obj = Trailer.objects.create(vehicle=vehicle_type)
-            self.assertEquals(vehicle_type, obj.vehicle)
+        trailers = ["Refrigerator", "Curtain Trailer"]
+        for trailer in trailers:
+            obj = Trailer.objects.create(trailer=trailer)
+            self.assertEquals(trailer, obj.trailer)
 
     def test_cargo_type(self):
         cargo_types = ["Industry", "Frozen Goods"]
