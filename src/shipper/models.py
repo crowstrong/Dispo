@@ -88,40 +88,42 @@ class Order(models.Model):
     remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.company_name} {self.loading_date} {self.loading_country} {self.loading_postcode} {self.loading_city} >> {self.delivery_date} {self.delivery_country} {self.delivery_postcode} {self.delivery_city}"
+        return f"{self.company_name} {self.loading_date} {self.loading_country} {self.loading_postcode} " \
+               f"{self.loading_city} {self.delivery_date} {self.delivery_country} {self.delivery_postcode} " \
+               f"{self.delivery_city} "
 
     @classmethod
     def generate_instances(cls, count: int) -> None:
-        faker = Faker()
+        fake = Faker()
         for _ in range(count):
             cls.objects.create(
-                order_id=faker.uuid4(),
-                company_name=faker.company(),
-                contact_person=faker.name(),
-                contact_email=faker.company_email(),
-                loading_country=faker.country(),
-                loading_postcode=faker.postcode(),
-                loading_city=faker.city(),
-                loading_address=faker.street_address(),
-                loading_coordinates=faker.latlng(),
-                loading_date=faker.iso8601(),
-                delivery_country=faker.country(),
-                delivery_postcode=faker.postcode(),
-                delivery_city=faker.city(),
-                delivery_address=faker.street_address(),
-                delivery_coordinates=faker.latlng(),
-                delivery_date=faker.iso8601(),
+                order_id=fake.uuid4(),
+                company_name=fake.company(),
+                contact_person=fake.name(),
+                contact_email=fake.company_email(),
+                loading_country=fake.country(),
+                loading_postcode=fake.postcode(),
+                loading_city=fake.city(),
+                loading_address=fake.street_address(),
+                loading_coordinates=fake.latlng(),
+                loading_date=fake.iso8601(),
+                delivery_country=fake.country(),
+                delivery_postcode=fake.postcode(),
+                delivery_city=fake.city(),
+                delivery_address=fake.street_address(),
+                delivery_coordinates=fake.latlng(),
+                delivery_date=fake.iso8601(),
                 distance=round(random.uniform(500.0, 1500.0), 1),
                 trailer_details=random.choice(Trailer.trailer),
                 cargo_details=random.choice(Cargo.cargo_type),
                 length=random.uniform(8.0, 13.6),
                 weight=random.uniform(10.0, 24.0),
-                adr=faker.pybool(),
-                waste=faker.pybool(),
+                adr=fake.pybool(),
+                waste=fake.pybool(),
                 currency=random.choice(Order.currency),
                 proposed_price=round(random.uniform(500.00, 5000.00), 2),
                 status=random.choice(Order.status),
-                remarks=faker.word(),
+                remarks=fake.word(),
             )
 
     class Meta:

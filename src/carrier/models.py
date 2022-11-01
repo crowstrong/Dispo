@@ -46,15 +46,15 @@ class Truck(models.Model):
 
     @classmethod
     def generate_instances(cls, count: int) -> None:
-        faker = Faker()
+        fake = Faker()
         for _ in range(count):
             cls.objects.create(
-                carrier_name=faker.company(),
-                vehicle_name=faker.bothify(text='??-####', letters='ABCDE'),
-                truck_registration=faker.country(),
-                truck_plates=faker.license_plate(),
-                trailer_registration=faker.country(),
-                trailer_plates=faker.license_plate(),
+                carrier_name=fake.company(),
+                vehicle_name=fake.bothify(text='??-####', letters='ABCDE'),
+                truck_registration=fake.country(),
+                truck_plates=fake.license_plate(),
+                trailer_registration=fake.country(),
+                trailer_plates=fake.license_plate(),
                 trailer_type=Trailer.TRAILER_TYPES.CURTAIN,
                 truck_status=Truck.TRUCK_STATUS.ACTUAL,
             )
