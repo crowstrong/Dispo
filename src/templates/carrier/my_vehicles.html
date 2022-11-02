@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Carrier Company</th>
+            <th scope="col">Vehicle Name</th>
+            <th scope="col">Truck Registration</th>
+            <th scope="col">Truck Plates</th>
+            <th scope="col">Trailer Registration</th>
+            <th scope="col">Trailer Plates</th>
+            <th scope="col">Trailer Type</th>
+            <th scope="col">Truck Status</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        {% for carrier in carriers %}
+            <td>{{ carrier.carrier_name }}</td>
+            <td>{{ carrier.vehicle_name }}</td>
+            <td>{{ carrier.truck_registration }}</td>
+            <td>{{ carrier.truck_plates }}</td>
+            <td>{{ carrier.trailer_registration }}</td>
+            <td>{{ carrier.trailer_plates }}</td>
+            <td>{{ carrier.truck_trailer }}</td>
+            <td>{{ carrier.truck_status }}</td>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+

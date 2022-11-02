@@ -10,20 +10,23 @@ from api.views import (CargoCreateView, CargoDeleteView, CargoDetailsView,
                        OrderDeleteView, OrderDetailsView, OrderUpdateView,
                        OrderViewSet, ProfileCreateView, ProfileDeleteView,
                        ProfileDetailsView, ProfileUpdateView, ProfileViewSet,
-                       VehicleCreateView, VehicleDeleteView,
-                       VehicleDetailsView, VehicleUpdateView, VehicleViewSet)
+                       TrailerCreateView, TrailerDeleteView,
+                       TrailerDetailsView, TrailerUpdateView, TrailerViewSet,
+                       TruckCreateView, TruckDeleteView, TruckDetailsView,
+                       TruckUpdateView, TruckViewSet)
 
 app_name = "api"
 routers = routers.DefaultRouter()
 routers.register("customers", CustomerViewSet)
 routers.register("profiles", ProfileViewSet)
 routers.register("orders", OrderViewSet)
-routers.register("vehicles", VehicleViewSet)
+routers.register("trucks", TruckViewSet)
+routers.register("trailer", TrailerViewSet)
 routers.register("cargo", CargoViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Quizez API",
+        title="Dispo API",
         default_version="v1",
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
@@ -53,10 +56,14 @@ urlpatterns = [
     path("order/create/", OrderCreateView.as_view(), name="api_order_create"),
     path("order/update/<int:pk>/", OrderUpdateView.as_view(), name="api_order_update"),
     path("order/delete/<int:pk>/", OrderDeleteView.as_view(), name="api_order_delete"),
-    path("vehicle/<int:pk>/", VehicleDetailsView.as_view(), name="api_vehicle_details"),
-    path("vehicle/create/", VehicleCreateView.as_view(), name="api_vehicle_create"),
-    path("vehicle/update/<int:pk>/", VehicleUpdateView.as_view(), name="api_vehicle_update"),
-    path("vehicle/delete/<int:pk>/", VehicleDeleteView.as_view(), name="api_vehicle_delete"),
+    path("truck/<int:pk>/", TruckDetailsView.as_view(), name="api_truck_details"),
+    path("truck/create/", TruckCreateView.as_view(), name="api_truck_create"),
+    path("truck/update/<int:pk>/", TruckUpdateView.as_view(), name="api_truck_update"),
+    path("truck/delete/<int:pk>/", TruckDeleteView.as_view(), name="api_truck_delete"),
+    path("trailer/<int:pk>/", TrailerDetailsView.as_view(), name="api_trailer_details"),
+    path("trailer/create/", TrailerCreateView.as_view(), name="api_trailer_create"),
+    path("trailer/update/<int:pk>/", TrailerUpdateView.as_view(), name="api_trailer_update"),
+    path("trailer/delete/<int:pk>/", TrailerDeleteView.as_view(), name="api_trailer_delete"),
     path("cargo/<int:pk>/", CargoDetailsView.as_view(), name="api_cargo_details"),
     path("cargo/create/", CargoCreateView.as_view(), name="api_cargo_create"),
     path("cargo/update/<int:pk>/", CargoUpdateView.as_view(), name="api_cargo_update"),

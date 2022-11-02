@@ -7,8 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from accounts.models import Customer, Profile
 from api.serializers import (CargoSerializer, CustomerSerializer,
                              OrderSerializer, ProfileSerializer,
-                             VehicleSerializer)
-from carrier.models import Vehicle
+                             TrailerSerializer, TruckSerializer)
+from carrier.models import Trailer, Truck
 from shipper.models import Cargo, Order
 
 
@@ -115,38 +115,72 @@ class OrderDeleteView(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 
-# Vehicle Views
+# Truck Views
+
+class TruckViewSet(ModelViewSet):
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+    permission_classes = [IsAuthenticated]
 
 
-class VehicleViewSet(ModelViewSet):
-    queryset = Vehicle.objects.all()
-    serializer_class = VehicleSerializer
+class TruckCreateView(CreateAPIView):
+    queryset = Truck
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class TruckDetailsView(RetrieveAPIView):
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return Truck.objects.get(pk=self.kwargs.get("pk"))
+
+
+class TruckUpdateView(UpdateAPIView):
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class TruckDeleteView(DestroyAPIView):
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+    permission_classes = [IsAuthenticated]
+
+
+# Trailer Views
+
+
+class TrailerViewSet(ModelViewSet):
+    queryset = Trailer.objects.all()
+    serializer_class = TrailerSerializer
     permission_classes = [IsAdminUser]
 
 
-class VehicleCreateView(CreateAPIView):
-    queryset = Vehicle
+class TrailerCreateView(CreateAPIView):
+    queryset = Trailer
     permission_classes = [IsAdminUser]
 
 
-class VehicleDetailsView(RetrieveAPIView):
-    queryset = Vehicle.objects.all()
-    serializer_class = VehicleSerializer
+class TrailerDetailsView(RetrieveAPIView):
+    queryset = Trailer.objects.all()
+    serializer_class = TrailerSerializer
     permission_classes = [IsAdminUser]
 
     def get_object(self):
-        return Vehicle.objects.get(pk=self.kwargs.get("pk"))
+        return Trailer.objects.get(pk=self.kwargs.get("pk"))
 
 
-class VehicleUpdateView(UpdateAPIView):
-    queryset = Vehicle.objects.all()
-    serializer_class = VehicleSerializer
+class TrailerUpdateView(UpdateAPIView):
+    queryset = Trailer.objects.all()
+    serializer_class = TrailerSerializer
     permission_classes = [IsAdminUser]
 
 
-class VehicleDeleteView(DestroyAPIView):
-    queryset = Vehicle.objects.all()
-    serializer_class = VehicleSerializer
+class TrailerDeleteView(DestroyAPIView):
+    queryset = Trailer.objects.all()
+    serializer_class = TrailerSerializer
     permission_classes = [IsAdminUser]
 
 

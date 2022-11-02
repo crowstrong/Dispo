@@ -1,5 +1,6 @@
 from django.contrib import admin
 
-from carrier.models import Vehicle
+from carrier.models import Trailer, Truck
 
-admin.site.register(Vehicle)
+admin.site.register(Trailer)
+admin.site.register(Truck)

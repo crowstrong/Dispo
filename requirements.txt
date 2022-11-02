@@ -26,6 +26,7 @@ djoser==2.1.0
 dnspython==2.2.1
 drf-yasg==1.21.4
 Faker==15.1.1
+faker-vehicle==0.2.0
 flake8==5.0.4
 future==0.18.2
 gprof2dot==2022.7.29
