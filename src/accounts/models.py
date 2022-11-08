@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -6,16 +8,35 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from django_countries.fields import CountryField
 
 from accounts.managers import CustomerManager, PeopleManager
 
 
+class Person(models.Model):
+    uuid = models.UUIDField(
+        primary_key=True,
+        editable=False,
+        default=uuid4,
+        unique=True,
+        db_index=True,
+    )
+    company_name = models.CharField(max_length=100, null=True)
+    contact_person = models.CharField(max_length=100, blank=False, null=True)
+    email = models.EmailField(max_length=255, blank=False, null=True)
+    phone_number = PhoneNumberField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.contact_person} {self.email}"
+
+    class Meta:
+        abstract = True
+
+
 class Customer(AbstractBaseUser, PermissionsMixin):
-    company = models.CharField(_("company name"), max_length=150, blank=True)
-    first_name = models.CharField(_("name"), max_length=150, blank=True)
-    last_name = models.CharField(_("surname"), max_length=150, blank=True)
-    email = models.EmailField(_("email address"), null=True, unique=True)
-    phone_number = PhoneNumberField(_("phone number"), null=True, blank=True)
+    company_name = models.CharField(_("Company name"), max_length=100, null=True)
+    contact_person = models.CharField(_("Contact Person"), max_length=100, blank=True, null=True)
+    email = models.EmailField(_("Contact Email"), max_length=255, blank=True, null=True, unique=True)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -41,19 +62,14 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
     def __str__(self):
-        return self.company
+        return self.company_name
 
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
 
-    def get_full_name(self):
-        full_name = "%s %s" % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        """Return the short name for the user."""
-        return self.first_name
+    def get_company_name(self):
+        return self.company_name
 
     def get_working_time(self):
         return f"Time on site: {timezone.now() - self.date_joined}"
@@ -67,7 +83,7 @@ class ProxyUser(get_user_model()):
         ordering = ("-pk",)
 
     def do_something(self):
-        print(f"{self.first_name}_{self.email}")
+        print(f"{self.contact_person}_{self.email}")
 
 
 class Profile(models.Model):
@@ -79,15 +95,14 @@ class Profile(models.Model):
     ]
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     user_type = models.CharField(max_length=50, choices=USER_TYPES)
-    avatar = models.ImageField(upload_to="img/profiles/", blank=False)
-    birth_date = models.DateField(blank=True, null=True)
+    avatar = models.ImageField(upload_to="img/profiles/", blank=True)
     email = models.EmailField(max_length=100, null=True)
-    phone_number = PhoneNumberField()
-    location = models.CharField(max_length=100, default="")
+    phone_number = PhoneNumberField(null=True, blank=True)
+    location = CountryField(blank_label="(select country)", blank=False)
     web_site = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name} {self.user.email} {self.user.pk}"
+        return f"{self.user.company_name} {self.user.contact_person} {self.user.email} {self.user.pk}"
 
     def get_absolute_url(self):
         return reverse("profile", kwargs={"pk": self.pk})

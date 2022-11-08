@@ -117,6 +117,7 @@ class OrderDeleteView(DestroyAPIView):
 
 # Truck Views
 
+
 class TruckViewSet(ModelViewSet):
     queryset = Truck.objects.all()
     serializer_class = TruckSerializer
