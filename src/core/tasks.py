@@ -3,10 +3,10 @@ import time
 
 from celery import shared_task
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from faker import Faker
 
-from shipper.models import Order
-from carrier.models import Truck
+from config.settings import base
 
 fake = Faker()
 
@@ -17,37 +17,27 @@ def task_request():
 
 
 @shared_task
-def get_price(loading_country, loading_postcode, loading_city, delivery_country, delivery_postcode, delivery_city):
-    loading_country = fake.country()
-    loading_postcode = fake.postcode()
-    loading_city = fake.city()
-    delivery_country = fake.country()
-    delivery_postcode = fake.postcode()
-    delivery_city = fake.city()
-    print(f"{loading_country}-{loading_postcode} {loading_city} >> {delivery_country}-{delivery_postcode} {delivery_city}")
+def get_price():
     distance = random.randint(500, 1500)
     tariff = random.uniform(0.7, 1.2)
     return distance * tariff
 
 
 @shared_task
-def order_request():
-    order = Order.objects.create(
-        company_name=get_user_model().objects.create_user(),
-        contact_person=fake.name(),
-        contact_email=fake.company_email(),
-        loading_country=fake.country(),
-        loading_postcode=fake.postcode(),
-        loading_city=fake.city(),
-        loading_address=fake.street_address(),
-        loading_coordinates=fake.latlng(),
-        loading_date=fake.iso8601(),
-        delivery_country=fake.country(),
-        delivery_postcode=fake.postcode(),
-        delivery_city=fake.city(),
-        delivery_address=fake.street_address(),
-        delivery_coordinates=fake.latlng(),
-        delivery_date=fake.iso8601(),
-        distance=random.randint(500, 1500),
-    )
-    order.save()
+def send_invoices():
+    users = get_user_model().objects.all()
+    for user in users:
+        mail_subject = f"Payment bill for order {fake.uuid4()}"
+        message = f"""Please find attached an invoice for {fake.uuid4()} : 
+        Loading in {fake.country_code()}-{fake.postcode()} {fake.city()} >> 
+        Delivery in {fake.country_code()}-{fake.postcode()} {fake.city()} / Tariff 
+        {round(random.uniform(500.00, 5000.00), 2)}"""
+        to_email = user.email
+        send_mail(
+            subject=mail_subject,
+            message=message,
+            from_email=base.EMAIL_HOST_USER,
+            recipient_list=[to_email],
+            fail_silently=True,
+        )
+        return "Done"

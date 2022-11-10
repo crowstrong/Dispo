@@ -1,6 +1,7 @@
-from django.views.generic import TemplateView
 from django.http import HttpResponse
-from core.tasks import task_request, get_price, order_request
+from django.views.generic import TemplateView
+
+from core.tasks import get_price, send_invoices, task_request
 
 
 class DispoHomePage(TemplateView):
@@ -21,6 +22,6 @@ def price_task(request):
     return HttpResponse("Price task is started, waiting for quotation.")
 
 
-def order_registration(request):
-    order_request.delay()
-    return HttpResponse("Task is started")
+def send_invoices_all(request):
+    send_invoices.delay()
+    return HttpResponse("Sent")

@@ -12,26 +12,25 @@ from carrier.models import Trailer
 
 
 class Cargo(models.Model):
-    CARGO_TYPES = (
-        ("Automobile Goods", "Automobile Goods"),
-        ("Industry", "Industry"),
-        ("Industry ADR", "Industry ADR"),
-        ("Industry Temp", "Industry Temp"),
-        ("Industry Temp ADR", "Industry Temp ADR"),
-        ("Consumer Goods", "Consumer Goods"),
-        ("Frozen Goods", "Frozen Goods"),
-        ("Frozen Food", "Frozen Food"),
-        ("Dry Food", "Dry Food"),
-        ("Fruits & Vegetables", "Fruits & Vegetables"),
-        ("Pet Food", "Pet Food"),
-        ("Waste", "Waste"),
-        ("Pharmacy", "Pharmacy"),
-        ("Empties", "Empties"),
-        ("Furniture", "Furniture")
-    )
+    class CARGO_TYPES(models.TextChoices):
+        AUTOMOBILE = "Automobile Goods", "Automobile Goods"
+        INDUSTRY = "Industry", "Industry"
+        INDUSTRY_ADR = "Industry ADR", "Industry ADR"
+        INDUSTRY_TEMP = "Industry Temp", "Industry Temp"
+        INDUSTRY_TEMP_ADR = "Industry Temp ADR", "Industry Temp ADR"
+        CONSUMER_GOODS = "Consumer Goods", "Consumer Goods"
+        FROZEN_GOODS = "Frozen Goods", "Frozen Goods"
+        FROZEN_FOOD = "Frozen Food", "Frozen Food"
+        DRY_FOOD = "Dry Food", "Dry Food"
+        FRUITS_VEGETABLES = "Fruits & Vegetables", "Fruits & Vegetables"
+        PET_FOOD = "Pet Food", "Pet Food"
+        WASTE = "Waste", "Waste"
+        PHARMACY = "Pharmacy", "Pharmacy"
+        EMPTIES = "Empties", "Empties"
+        FURNITURE = "Furniture", "Furniture"
 
     cargo_type = models.CharField(
-        choices=CARGO_TYPES, default="INDUSTRY", max_length=50, blank=False, null=True
+        choices=CARGO_TYPES.choices, default=CARGO_TYPES.INDUSTRY, max_length=50, blank=False, null=True
     )
 
     def __str__(self):
@@ -47,17 +46,15 @@ class Cargo(models.Model):
 
 
 class Order(Person):
-    STATUS_CHOICE = (
-        ("Actual", "Actual"),
-        ("Confirmed", "Confirmed"),
-        ("Delivery", "Delivery"),
-        ("Closed", "Closed"),
-    )
+    class STATUS_CHOICE(models.TextChoices):
+        ACTUAL = "Actual", "Actual"
+        CONFIRMED = "Confirmed", "Confirmed"
+        Delivery = "Delivery", "Delivery"
+        CLOSE = "Closed", "Closed"
 
-    CURRENCY_CHOICE = (
-        ("EUR", "EUR"),
-        ("USD", "USD"),
-    )
+    class CURRENCY_CHOICE(models.TextChoices):
+        EU = "EUR", "EUR"
+        USD = "USD", "USD"
 
     order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
     loading_country = CountryField(blank_label="(select country)", blank=False)
@@ -83,9 +80,9 @@ class Order(Person):
     weight = models.FloatField(blank=False, null=True, validators=[MaxValueValidator(24.0)])
     adr = models.BooleanField(default=False, null=True)
     waste = models.BooleanField(default=False, null=True)
-    currency = models.CharField(choices=CURRENCY_CHOICE, default="EU", max_length=5, blank=False)
+    currency = models.CharField(choices=CURRENCY_CHOICE.choices, default=CURRENCY_CHOICE.EU, max_length=5, blank=False)
     proposed_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    status = models.CharField(choices=STATUS_CHOICE, default="ACTUAL", max_length=10)
+    status = models.CharField(choices=STATUS_CHOICE.choices, default=STATUS_CHOICE.ACTUAL, max_length=10)
     remarks = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -101,28 +98,26 @@ class Order(Person):
                 contact_person=fake.name(),
                 email=fake.company_email(),
                 phone_number=fake.phone_number(),
-                loading_country=fake.country(),
+                loading_country=fake.country_code(),
                 loading_postcode=fake.postcode(),
                 loading_city=fake.city(),
                 loading_address=fake.street_address(),
                 loading_coordinates=fake.latlng(),
-                loading_date=fake.iso8601(),
-                delivery_country=fake.country(),
+                loading_date="2006-10-25T14:30+02:00",
+                delivery_country=fake.country_code(),
                 delivery_postcode=fake.postcode(),
                 delivery_city=fake.city(),
                 delivery_address=fake.street_address(),
                 delivery_coordinates=fake.latlng(),
-                delivery_date=fake.iso8601(),
+                delivery_date="2006-10-25T14:30+02:00",
                 distance=random.randint(500, 1500),
-                trailer_type=random.choice(Order.trailer_type.trailer_type),
-                cargo_details=random.choice(Cargo.CARGO_TYPES),
+                trailer_type=Trailer.objects.create(),
+                cargo_details=Cargo.objects.create(),
                 length=random.uniform(8.0, 13.6),
                 weight=random.uniform(10.0, 24.0),
                 adr=fake.pybool(),
                 waste=fake.pybool(),
-                currency=random.choice(Order.CURRENCY_CHOICE),
                 proposed_price=round(random.uniform(500.00, 5000.00), 2),
-                status=random.choice(Order.STATUS_CHOICE),
                 remarks=fake.word(),
             )
 

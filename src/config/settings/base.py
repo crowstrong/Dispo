@@ -150,3 +150,12 @@ CELERY_RESULT_BACKEND = "redis://redis"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
+# SMTP settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "ntpython924@gmail.com"
+EMAIL_HOST_PASSWORD = "ipmpedugzgnuzett"
+DEFAULT_FROM_EMAIL = "Celery <ntpython924@gmail.com>"
