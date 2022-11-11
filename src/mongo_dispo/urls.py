@@ -2,7 +2,7 @@ from django.urls import path
 
 from mongo_dispo.views import all_entries, create_in_mongo
 
-app_name = 'mongo_dispo'
+app_name = "mongo_dispo"
 
 urlpatterns = [
     path("create_mongo/", create_in_mongo, name="create_mongo"),

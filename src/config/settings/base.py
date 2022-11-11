@@ -22,9 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-c@16b*5v@c182a-vge^+3*h!-c3=$^6b-rw+@d%+2dnaj-ffia"
 
-mongoengine.connect(
-    host="mongodb://admin:admin@mongodb:27017/mongodb_dispo?authSource=admin"
-)
+mongoengine.connect(host="mongodb://admin:admin@mongodb:27017/mongodb_dispo?authSource=admin")
 
 # Application definition
 
@@ -68,7 +66,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -145,3 +143,19 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+CELERY_BROKER_URL = "redis://redis"
+CELERY_RESULT_BACKEND = "redis://redis"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+
+# SMTP settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "ntpython924@gmail.com"
+EMAIL_HOST_PASSWORD = "ipmpedugzgnuzett"
+DEFAULT_FROM_EMAIL = "Celery <ntpython924@gmail.com>"
