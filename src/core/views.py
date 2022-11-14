@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-
 from core.tasks import get_price, send_invoices, task_request
+
+from django.shortcuts import render
 
 
 class DispoHomePage(TemplateView):
@@ -10,6 +11,12 @@ class DispoHomePage(TemplateView):
 
 class Error404(TemplateView):
     template_name = "errors/not-found.html"
+
+
+def support(request, room_name):
+    return render(request, 'tools/support.html', {
+        'room_name': room_name
+    })
 
 
 def start_task(request):

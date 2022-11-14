@@ -93,6 +93,20 @@ services:
       - redis
       - backend
 
+  celerybeat:
+    build: ./
+    command:
+      - ./commands/start_celerybeat.sh
+    restart: always
+    volumes:
+      - ./src:/Dispo
+      - ./commands:/Dispo/commands
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - celery
+
 
   redis:
     image: redis
