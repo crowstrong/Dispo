@@ -48,7 +48,7 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url "core:room_name" %}">Support</a>
+                                <a class="dropdown-item" href="{% url "core:support" %}">Support</a>
 
                             </div>
                         </li>
@@ -59,9 +59,8 @@
         <!-- Page content-->
         <div class="container-fluid">
             {% block content %}
-                <h1 class="mt-4">None</h1>
+            <h1 class="mt-4">Dashboard</h1>
             {% endblock %}
-        </div>
     </div>
 </div>
 <!-- Bootstrap core JS-->

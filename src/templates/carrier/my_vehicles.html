@@ -15,15 +15,15 @@
         </tr>
         </thead>
         <tbody class="table-group-divider">
-        {% for truck in trucks %}
-            <td>{{ truck.carrier_name }}</td>
-            <td>{{ truck.vehicle_name }}</td>
-            <td>{{ truck.truck_registration }}</td>
-            <td>{{ truck.truck_plates }}</td>
-            <td>{{ truck.trailer_registration }}</td>
-            <td>{{ truck.trailer_plates }}</td>
-            <td>{{ truck.truck_trailer }}</td>
-            <td>{{ truck.truck_status }}</td>
+        {% for carrier in carriers %}
+            <td>{{ carrier.carrier_name }}</td>
+            <td>{{ carrier.vehicle_name }}</td>
+            <td>{{ carrier.truck_registration }}</td>
+            <td>{{ carrier.truck_plates }}</td>
+            <td>{{ carrier.trailer_registration }}</td>
+            <td>{{ carrier.trailer_plates }}</td>
+            <td>{{ carrier.truck_trailer }}</td>
+            <td>{{ carrier.truck_status }}</td>
         {% endfor %}
         </tbody>
     </table>

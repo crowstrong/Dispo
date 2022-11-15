@@ -173,5 +173,23 @@ EMAIL_HOST_USER = "ntpython924@gmail.com"
 EMAIL_HOST_PASSWORD = "ipmpedugzgnuzett"
 DEFAULT_FROM_EMAIL = "Celery <ntpython924@gmail.com>"
 
+
+##### Channels-specific settings
+
+STATIC_URL = '/static/'
+
 # SupportRoom Settings
 ASGI_APPLICATION = "config.routing.application"
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
+
+
+
