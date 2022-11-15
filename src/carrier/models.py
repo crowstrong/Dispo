@@ -67,5 +67,5 @@ class Truck(models.Model):
             )
 
     class Meta:
-        verbose_name = _("Trucks")
+        verbose_name = _("Truck")
         verbose_name_plural = _("Trucks")

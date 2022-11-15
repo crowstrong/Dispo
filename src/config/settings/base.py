@@ -157,10 +157,7 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_BEAT_SCHEDULE = {
     "invoice_period_task": {
         "task": "core.tasks.send_invoices",
-        "schedule": crontab(minute="*",
-                            hour="*",
-                            day_of_month=[1],
-                            month_of_year=[1, 3, 5, 7, 9, 11])
+        "schedule": crontab(minute="*", hour="*", day_of_month=[1], month_of_year=[1, 3, 5, 7, 9, 11]),
     }
 }
 
@@ -173,23 +170,18 @@ EMAIL_HOST_USER = "ntpython924@gmail.com"
 EMAIL_HOST_PASSWORD = "ipmpedugzgnuzett"
 DEFAULT_FROM_EMAIL = "Celery <ntpython924@gmail.com>"
 
+# Channels-specific settings
 
-##### Channels-specific settings
-
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # SupportRoom Settings
 ASGI_APPLICATION = "config.routing.application"
 
-
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
             "hosts": [("localhost", 6379)],
         },
     },
 }
-
-
-
