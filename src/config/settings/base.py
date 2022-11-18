@@ -12,6 +12,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import mongoengine
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -36,10 +37,12 @@ INSTALLED_APPS = [
     "django_extensions",
     "phonenumber_field",
     "django_countries",
+    "django_celery_beat",
     "rest_framework",
     "crispy_forms",
     "debug_toolbar",
     "mongo_dispo",
+    "channels",
     "drf_yasg",
     "carrier",
     "shipper",
@@ -151,6 +154,13 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
 
+CELERY_BEAT_SCHEDULE = {
+    "invoice_period_task": {
+        "task": "core.tasks.send_invoices",
+        "schedule": crontab(minute="*", hour="*", day_of_month=[1], month_of_year=[1, 3, 5, 7, 9, 11]),
+    }
+}
+
 # SMTP settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
@@ -159,3 +169,19 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "ntpython924@gmail.com"
 EMAIL_HOST_PASSWORD = "ipmpedugzgnuzett"
 DEFAULT_FROM_EMAIL = "Celery <ntpython924@gmail.com>"
+
+# Channels-specific settings
+
+STATIC_URL = "/static/"
+
+# SupportRoom Settings
+ASGI_APPLICATION = "config.routing.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}

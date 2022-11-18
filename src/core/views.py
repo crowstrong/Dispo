@@ -1,4 +1,8 @@
+import json
+
 from django.http import HttpResponse
+from django.shortcuts import render
+from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 
 from core.tasks import get_price, send_invoices, task_request
@@ -10,6 +14,14 @@ class DispoHomePage(TemplateView):
 
 class Error404(TemplateView):
     template_name = "errors/not-found.html"
+
+
+def support(request):
+    return render(request, "tools/room_enter.html")
+
+
+def room(request, room_name):
+    return render(request, "tools/chatroom.html", {"room_name_json": mark_safe(json.dumps(room_name))})
 
 
 def start_task(request):

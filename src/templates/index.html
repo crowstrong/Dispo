@@ -22,9 +22,12 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3"
                href="{% url 'shipper:my_orders' %}">My Orders</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'shipper:add_order' %}">Add Order</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url "carrier:my_vehicles" %}">Vehicles</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url "carrier:add_vehicle" %}">Add Vehicle</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3"
+               href="{% url 'shipper:add_order' %}">Add Order</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3"
+               href="{% url "carrier:my_vehicles" %}">Vehicles</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3"
+               href="{% url "carrier:add_vehicle" %}">Add Vehicle</a>
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -45,10 +48,8 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#!">Action</a>
-                                <a class="dropdown-item" href="#!">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Something else here</a>
+                                <a class="dropdown-item" href="{% url "core:support" %}">Support</a>
+
                             </div>
                         </li>
                     </ul>
@@ -58,9 +59,8 @@
         <!-- Page content-->
         <div class="container-fluid">
             {% block content %}
-            <h1 class="mt-4">Simple Sidebar</h1>
+            <h1 class="mt-4">Dashboard</h1>
             {% endblock %}
-        </div>
     </div>
 </div>
 <!-- Bootstrap core JS-->
