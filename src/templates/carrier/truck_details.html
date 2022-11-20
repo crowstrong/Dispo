@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container">
         {% csrf_token %}
-        <h1>Order ID: {{ truck.order_id }}</h1>
+        <h1>Truck ID: {{ truck.order_id }}</h1>
         <h1>Company Name: {{ truck.company_name }}</h1>
         <h1>Vehicle Name: {{ truck.vehicle_name }}</h1>
         <h1>Truck Registration (Truck/Trailer): {{ truck.truck_registration }}//{{ truck.trailer_registration }}</h1>
