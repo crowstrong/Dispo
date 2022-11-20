@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from faker import Faker
+from accounts.models import Company
 
 
 class Trailer(models.Model):
@@ -29,14 +30,13 @@ class Trailer(models.Model):
         verbose_name_plural = _("Trailer Types")
 
 
-class Truck(models.Model):
+class Truck(Company):
     class TRUCK_STATUS(models.TextChoices):
         ACTUAL = "Actual", "Actual"
         BOOKED = "Booked", "Booked"
         TRANSIT = "Transit", "Transit"
         REJECTED = "Rejected", "Rejected"
 
-    carrier_name = models.CharField(max_length=255, blank=False, null=True)
     vehicle_name = models.CharField(max_length=50, blank=False, null=True)
     truck_registration = CountryField(blank_label="(select country)", blank=False)
     truck_plates = models.CharField(max_length=50, blank=False, null=True)
@@ -45,6 +45,9 @@ class Truck(models.Model):
     truck_trailer = models.ForeignKey(
         to="carrier.Trailer", related_name="truck_trailer", on_delete=models.CASCADE, blank=False, null=True
     )
+    position_country = CountryField(blank_label="(select country)", blank=False)
+    position_postcode = models.CharField(max_length=25, blank=False, null=True)
+    position_city = models.CharField(max_length=100, blank=False, null=True)
     truck_status = models.CharField(
         choices=TRUCK_STATUS.choices, default=TRUCK_STATUS.ACTUAL, blank=False, max_length=15
     )
@@ -57,13 +60,20 @@ class Truck(models.Model):
         fake = Faker()
         for _ in range(count):
             cls.objects.create(
-                carrier_name=fake.company(),
+                order_id=fake.uuid4(),
+                company_name=fake.company(),
+                contact_person=fake.name(),
+                email=fake.company_email(),
+                phone_number=fake.phone_number(),
                 vehicle_name=fake.bothify(text="??-####", letters="ABCDE"),
                 truck_registration=fake.country_code(),
                 truck_plates=fake.license_plate(),
                 trailer_registration=fake.country_code(),
                 trailer_plates=fake.license_plate(),
                 truck_trailer=Trailer.objects.create(),
+                position_country=fake.country_code(),
+                position_postcode=fake.postcode(),
+                position_city=fake.city(),
             )
 
     class Meta:

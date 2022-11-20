@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from faker import Faker
 
-from accounts.models import Person
+from accounts.models import Company
 from carrier.models import Trailer
 
 
@@ -45,7 +45,7 @@ class Cargo(models.Model):
         verbose_name_plural = _("Cargo")
 
 
-class Order(Person):
+class Order(Company):
     class STATUS_CHOICE(models.TextChoices):
         ACTUAL = "Actual", "Actual"
         CONFIRMED = "Confirmed", "Confirmed"
@@ -55,8 +55,6 @@ class Order(Person):
     class CURRENCY_CHOICE(models.TextChoices):
         EU = "EUR", "EUR"
         USD = "USD", "USD"
-
-    order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
     loading_country = CountryField(blank_label="(select country)", blank=False)
     loading_postcode = models.CharField(max_length=25, blank=False, null=True)
     loading_city = models.CharField(max_length=100, blank=False, null=True)

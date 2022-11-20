@@ -11,19 +11,24 @@
             <th scope="col">Trailer Registration</th>
             <th scope="col">Trailer Plates</th>
             <th scope="col">Trailer Type</th>
+            <th scope="col">Truck Position</th>
             <th scope="col">Truck Status</th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
-        {% for carrier in carriers %}
-            <td>{{ carrier.carrier_name }}</td>
-            <td>{{ carrier.vehicle_name }}</td>
-            <td>{{ carrier.truck_registration }}</td>
-            <td>{{ carrier.truck_plates }}</td>
-            <td>{{ carrier.trailer_registration }}</td>
-            <td>{{ carrier.trailer_plates }}</td>
-            <td>{{ carrier.truck_trailer }}</td>
-            <td>{{ carrier.truck_status }}</td>
+        {% for truck in trucks %}
+            <tr>
+                <td>{{ truck.company_name }}</td>
+                <td>{{ truck.vehicle_name }}</td>
+                <td>{{ truck.truck_registration }}</td>
+                <td>{{ truck.truck_plates }}</td>
+                <td>{{ truck.trailer_registration }}</td>
+                <td>{{ truck.trailer_plates }}</td>
+                <td>{{ truck.truck_trailer }}</td>
+                <td>{{ truck.position_country }}-{{ truck.position_postcode }} {{ truck.position_city }}</td>
+                <td>{{ truck.truck_status }}</td>
+                <td><a class="btn btn-primary" href={% url "carrier:truck_details" truck.pk %}>View</a></td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        {% csrf_token %}
+        <h1>Order ID: {{ order.order_id }}</h1>
+        <h1>Company Name: {{ order.company_name }}</h1>
+        <h1>Loading Details: {{ order.loading_country }}-{{ order.loading_postcode }} {{ order.loading_city }}</h1>
+        <h1>Loading Date: {{ order.loading_date }}</h1>
+        <h1>Delivery Details: {{ order.delivery_country }}-{{ order.delivery_postcode }} {{ order.delivery_city }}</h1>
+        <h1>Delivery Date: {{ order.delivery_date }}</h1>
+        <h1>Distance: {{ order.distance }}</h1>
+        <h1>Trailer Type: {{ order.trailer_type }}</h1>
+        <h1>Cargo Details: {{ order.cargo_details }}</h1>
+        <h1>Length: {{ order.length }}</h1>
+        <h1>Weight: {{ order.weight }}</h1>
+        <h1>ADR: {{ order.adr }}</h1>
+        <h1>Waste: {{ order.waste }}</h1>
+        <h1>Price: {{ order.currency }} {{ order.proposed_price }}</h1>
+
+        <h2>Contact Info:</h2>
+        <h2>Contact Person: {{ order.contact_person }}</h2>
+        <h2>Email: {{ order.email }}</h2>
+        <h2>Phone Number: {{ order.phone_number }}</h2>
+        <a class="btn btn-primary" href={% url "shipper:my_orders" %}>Back to order page</a>
+    </div>
+{% endblock content %}
