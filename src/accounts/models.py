@@ -13,8 +13,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from accounts.managers import CustomerManager, PeopleManager
 
 
-class Person(models.Model):
-    uuid = models.UUIDField(
+class Company(models.Model):
+    order_id = models.UUIDField(
         primary_key=True,
         editable=False,
         default=uuid4,
