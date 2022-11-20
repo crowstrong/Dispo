@@ -1,2 +1,2 @@
 # Dispo
-Dispo - logistics aggregator
+Dispo - logistics exchange
