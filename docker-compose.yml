@@ -1,0 +1,146 @@
+version: "3"
+
+services:
+  backend:
+    build: ./
+    container_name: dispo_container
+    working_dir: /Dispo
+    command:
+      - ./commands/start_server_${MODE}.sh
+    ports:
+      - ${LOCAL_PORT}:${WSGI_PORT}
+    volumes:
+      - static_content:/Dispo/src/static
+      - media_content:/Dispo/src/media
+      - ./src:/Dispo/src
+    env_file:
+      - .env
+
+
+#  postgres:
+#    image: postgres:12
+#    ports:
+#      - ${POSTGRES_PORT}:5432
+#    volumes:
+#      - pg_data:/var/lib/postgresql/data
+#    env_file:
+#      - .env
+
+#  pgadmin:
+#    container_name: pgadmin_container
+#    image: dpage/pgadmin4
+#    restart: always
+#    env_file:
+#      - .env
+#    ports:
+#      - 5000:80
+#    volumes:
+#      - pgadmin_data:/var/lib/pgadmin
+#    depends_on:
+#      - postgres
+
+#  mongodb:
+#    image: mongo:3-stretch
+#    container_name: ${ME_CONFIG_MONGODB_SERVER}
+#    ports:
+#      - ${ME_CONFIG_MONGODB_PORT}:27017
+#    command: [ "--bind_ip_all", "--smallfiles" ]
+#    volumes:
+#      - mongo_data:/data/db
+#    env_file:
+#      - .env
+#    restart: always
+
+#  mongoadmin:
+#    image: mongo-express
+#    restart: always
+#    container_name: mongo_admin_container
+#    ports:
+#      - 8091:8081
+#    env_file:
+#      - .env
+#    links:
+#      - mongodb
+#    depends_on:
+#      - mongodb
+
+  nginx:
+    image: nginx:1.19
+    volumes:
+      - static_content:/Dispo/src/static
+      - media_content:/Dispo/src/media
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
+#  celery:
+#    build: ./
+#    command:
+#      - ./commands/start_celery.sh
+#    restart: always
+#    volumes:
+#      - ./src:/Dispo
+#      - ./commands:/Dispo/commands
+#    env_file:
+#      - .env
+#    depends_on:
+#      - redis
+#      - backend
+#
+#  celerybeat:
+#    build: ./
+#    command:
+#      - ./commands/start_celerybeat.sh
+#    restart: always
+#    volumes:
+#      - ./src:/Dispo
+#      - ./commands:/Dispo/commands
+#    env_file:
+#      - .env
+#    depends_on:
+#      - redis
+#      - celery
+#
+#
+#  redis:
+#    image: redis
+#    env_file:
+#      - .env
+#    restart: on-failure
+#    depends_on:
+#      - backend
+#
+#  flower:
+#    build: ./
+#    volumes:
+#      - ./src:/Dispo
+#    env_file:
+#      - .env
+#    command: celery -A config flower --broker=redis://redis
+#    ports:
+#      - 5555:5555
+#    depends_on:
+#      - celery
+#      - redis
+#
+#  redisadmin:
+#    container_name: redisadmin
+#    image: rediscommander/redis-commander:latest
+#    hostname: redisadmin
+#    restart: always
+#    ports:
+#      - 8092:8081
+#    env_file:
+#      - .env
+
+volumes:
+#  mongo_data: { }
+#  pg_data: { }
+#  pgadmin_data: { }
+  static_content: { }
+  media_content: { }

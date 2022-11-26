@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        {% csrf_token %}
+        <h1>Truck ID: {{ truck.order_id }}</h1>
+        <h1>Company Name: {{ truck.company_name }}</h1>
+        <h1>Vehicle Name: {{ truck.vehicle_name }}</h1>
+        <h1>Truck Registration (Truck/Trailer): {{ truck.truck_registration }}//{{ truck.trailer_registration }}</h1>
+        <h1>Truck Plates (Truck/Trailer): {{ truck.truck_plates }}//{{ truck.trailer_plates }}</h1>
+        <h1>Trailer Type: {{ truck.truck_trailer }}</h1>
+        <h1>Position Details: {{ truck.position_country }}-{{ truck.position_postcode }} {{ truck.position_city }}</h1>
+        <h1>Status: {{ truck.truck_status }}</h1>
+        <h2>Contact Info:</h2>
+        <h2>Contact Person: {{ truck.contact_person }}</h2>
+        <h2>Email: {{ truck.email }}</h2>
+        <h2>Phone Number: {{ truck.phone_number }}</h2>
+        <a class="btn btn-primary" href={% url "carrier:my_vehicles" %}>Back to vehicle page</a>
+    </div>
+{% endblock content %}
